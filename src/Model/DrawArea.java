@@ -1,8 +1,13 @@
 package Model;
 
 import java.awt.Image;
+import java.awt.RenderingHints;
+
 //Provides classes for creating and modifying images.
 import javax.swing.JComponent;
+
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 //Provides control over geometry, coordinate transformations, and text.
 import java.awt.event.MouseAdapter;
@@ -49,12 +54,35 @@ public class DrawArea extends JComponent
 			}
 		});
 		
-		protected void paintComponent (Graphics g)
+		protected void paintComponent(Graphics g2)
 		{
 			if (image == null)
 			{
-				
+				image = createImage(getSize().width, getSize().height);
+				g2 = (Graphics2D) image.getGraphics();
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				clear();
 			}
+			
+			g.drawImage(image, 0, 0, null);
+		}
+		
+		public void clear()
+		{
+			g2.setPaint(Color.white);
+			g2.fillRect(0, 0, getSize().width, getSize().height);
+			g2.setPaint(Color.black);
+			repaint();
+		}
+		
+		public void red()
+		{
+			g2.setPaint(Color.red);
+		}
+		
+		public void blue()
+		{
+			g2.setPaint(Color.blue);
 		}
 		//
 	}
